@@ -1,0 +1,26 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: sca-gateway
+  cloud:
+    nacos:
+      discovery:
+        username: nacos
+        password: nacos
+        server-addr: localhost:8848
+    gateway:
+      routes:
+      - id: order
+        uri: lb://sca-order
+        predicates:
+        - Path=/order/**
+      - id: account
+        uri: lb://sca-account
+        predicates:
+        - Path=/account/**
+      - id: storage
+        uri: lb://sca-storage
+        predicates:
+        - Path=/storage/**

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenzhenhu.cloud.account.mapper.AccountMapper">
+    <resultMap id="accountMap" type="accountEntity">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="accountEntity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO account (id, username, password, name, email) VALUES (#{id}, #{username}, #{password}, #{name}, #{email})
+    </insert>
+
+    <update id="update" parameterType="accountEntity">
+        UPDATE account
+        <set>
+            <if test="username != null and username !=''">
+                username = #{username},
+            </if>
+            <if test="password != null and password !=''">
+                password = #{password},
+            </if>
+            <if test="name != null and name !=''">
+                name = #{name},
+            </if>
+            <if test="email != null and email !=''">
+                email = #{email},
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <select id="selectById" resultMap="accountMap">
+        SELECT * FROM account WHERE id = #{id}
+    </select>
+</mapper>
